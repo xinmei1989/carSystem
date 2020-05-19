@@ -1,6 +1,7 @@
 package com.jkxy.car.api.controller;
 
 import com.jkxy.car.api.pojo.Car;
+import com.jkxy.car.api.pojo.PageInfo;
 import com.jkxy.car.api.service.CarService;
 import com.jkxy.car.api.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,26 @@ public class CarController {
     public JSONResult insertCar(Car car) {
         carService.insertCar(car);
         return JSONResult.ok();
+    }
+
+    /**
+     * 作业一
+     * 购买车辆
+     */
+    @PostMapping("purchaseCar/{id}")
+    public JSONResult purchaseCar(@PathVariable int id) {
+        int result = carService.purchaseCar(id);
+        if (result == 0) return JSONResult.ok();
+        return JSONResult.errorMsg("购买失败");
+    }
+
+    /**
+     * 作业二
+     * 模糊查询 分页展示
+     */
+    @PostMapping("queryByPage")
+    public JSONResult queryByPage(@RequestBody PageInfo pageInfo) {
+        List<Car> cars = carService.queryByPage(pageInfo);
+        return JSONResult.ok(cars);
     }
 }
